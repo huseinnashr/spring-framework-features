@@ -5,11 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import me.huseinnashr.anotherspringboot.domain.User;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("")
 public class HomeController {
 
   @GetMapping
@@ -20,7 +21,14 @@ public class HomeController {
   }
 
   @PostMapping(value = "/create")
-  public String processFormData(User user) {
+  public String processFormData(User user, RedirectAttributes attr) {
+
+    attr.addFlashAttribute("user", user);
+    return "redirect:/display";
+  }
+
+  @GetMapping(value = "display")
+  public String displayFormData(User user) {
     return "result";
   }
 
